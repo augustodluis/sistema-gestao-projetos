@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Projetos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/login-styles.css" rel="stylesheet">
+    <link href="css/notification-styles.css" rel="stylesheet">
+    
+    <!-- Favicon - vários formatos para máxima compatibilidade -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <!-- Logo SVG inline para garantir visibilidade -->
+                <svg id="logo-img" height="40" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="25" fill="#3498db" />
+                  <circle cx="18" cy="30" r="6" fill="#ecf0f1" />
+                  <circle cx="30" cy="18" r="6" fill="#ecf0f1" />
+                  <circle cx="42" cy="30" r="6" fill="#ecf0f1" />
+                  <circle cx="30" cy="42" r="6" fill="#ecf0f1" />
+                  <rect x="70" y="20" width="10" height="30" fill="#2ecc71" />
+                  <rect x="85" y="10" width="10" height="40" fill="#3498db" />
+                  <rect x="100" y="15" width="10" height="35" fill="#e74c3c" />
+                  <text x="120" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">SGP</text>
+                  <text x="120" y="45" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">Gestão de Projetos</text>
+                </svg>
+                <span id="system-name">Sistema de Gestão de Projetos</span>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#" id="nav-dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#" id="nav-members"><i class="fas fa-users"></i> Membros</a></li>
+                    <li><a href="#" id="nav-projects"><i class="fas fa-project-diagram"></i> Projetos</a></li>
+                    <li><a href="#" id="nav-admin" class="admin-only"><i class="fas fa-cog"></i> Admin</a></li>
+                    <li><a href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção de Login Redesenhada -->
+    <div id="login-section" class="container">
+        <div class="login-card">
+            <!-- Logo SVG inline na tela de login -->
+            <div class="logo-container">
+                <svg class="login-logo" height="80" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="25" fill="#3498db" />
+                  <circle cx="18" cy="30" r="6" fill="#ecf0f1" />
+                  <circle cx="30" cy="18" r="6" fill="#ecf0f1" />
+                  <circle cx="42" cy="30" r="6" fill="#ecf0f1" />
+                  <circle cx="30" cy="42" r="6" fill="#ecf0f1" />
+                  <rect x="70" y="20" width="10" height="30" fill="#2ecc71" />
+                  <rect x="85" y="10" width="10" height="40" fill="#3498db" />
+                  <rect x="100" y="15" width="10" height="35" fill="#e74c3c" />
+                  <text x="120" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">SGP</text>
+                  <text x="120" y="45" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">Gestão de Projetos</text>
+                </svg>
+            </div>
+            
+            <h1 class="login-title">Bem-vindo! <span class="wave-emoji">👋</span></h1>
+            <p class="login-subtitle">Faça login para acessar o sistema</p>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="login-email"><i class="fas fa-envelope"></i> Email:</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="Seu email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Senha:</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Sua senha">
+                </div>
+                <div class="form-group">
+                    <label for="login-type"><i class="fas fa-user-tag"></i> Tipo de Acesso:</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="login-admin" name="login-type" value="admin">
+                        <label for="login-admin" class="toggle-label"><i class="fas fa-user-shield"></i> Administrador</label>
+                        
+                        <input type="radio" id="login-member" name="login-type" value="member" checked>
+                        <label for="login-member" class="toggle-label"><i class="fas fa-user"></i> Membro</label>
+                    </div>
+                    
+                    <!-- Opção compatível com a versão anterior (oculta visualmente) -->
+                    <select id="login-type" style="display: none;">
+                        <option value="member" selected>Membro</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                <button id="login-btn" class="btn btn-primary login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </div>
+            
+            <div class="login-footer">
+                <p class="login-info">
+                    <span class="info-icon"><i class="fas fa-info-circle"></i></span>
+                    Para demonstração: 
+                    <br><strong>Admin:</strong> admin@sistema.com / Senha: admin
+                    <br><strong>Membro:</strong> joao.silva@email.com / Senha: membro
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div id="main-content" class="container" style="display: none;">
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total de Membros</div>
+                    <div class="stat-value" id="total-members">0</div>
+                    <div>Registrados no sistema</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Engenheiros</div>
+                    <div class="stat-value" id="total-engineers">0</div>
+                    <div>Meta: <span id="engineer-goal">50</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Designers</div>
+                    <div class="stat-value" id="total-designers">0</div>
+                    <div>Profissionais ativos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Membros Ativos</div>
+                    <div class="stat-value" id="active-members">0</div>
+                    <div>Participação recente</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    Atividades Recentes
+                    <button class="btn btn-primary" id="refresh-activities"><i class="fas fa-sync"></i> Atualizar</button>
+                </div>
+                <table id="activities-table">
+                    <thead>
+                        <tr>
+                            <th>Membro</th>
+                            <th>Atividade</th>
+                            <th>Projeto</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Será preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    Projetos Ativos
+                </div>
+                <div class="grid" id="active-projects-grid">
+                    <!-- Será preenchido via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Membros -->
+        <div id="members" class="tab-content">
+            <div class="section">
+                <div class="section-title">
+                    Gestão de Membros
+                    <button class="btn btn-primary admin-only" id="add-member-btn"><i class="fas fa-plus"></i> Novo Membro</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="member-search" placeholder="Buscar membros..." onkeyup="searchMembers()">
+                    <select id="member-filter" class="form-control" style="width: auto;">
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="inactive">Inativos</option>
+                        <option value="engineer">Engenheiros</option>
+                        <option value="designer">Designers</option>
+                    </select>
+                </div>
+                <table id="members-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Função</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Último Acesso</th>
+                            <th class="admin-only">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Será preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Projetos -->
+        <div id="projects" class="tab-content">
+            <div class="section">
+                <div class="section-title">
+                    Gestão de Projetos
+                    <button class="btn btn-primary admin-only" id="add-project-btn"><i class="fas fa-plus"></i> Novo Projeto</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="project-search" placeholder="Buscar projetos...">
+                    <select id="project-filter" class="form-control" style="width: auto;">
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="completed">Concluídos</option>
+                        <option value="pending">Pendentes</option>
+                    </select>
+                </div>
+                <div class="grid" id="projects-grid">
+                    <!-- Será preenchido via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin -->
+        <div id="admin" class="tab-content admin-only">
+            <div class="section">
+                <div class="section-title">Configurações do Sistema</div>
+                <div class="form-group">
+                    <label for="system-title">Nome do Sistema:</label>
+                    <input type="text" id="system-title" class="form-control" placeholder="Nome do Sistema" value="Sistema de Gestão de Projetos">
+                </div>
+                <div class="form-group">
+                    <label for="institution-name">Nome da Instituição:</label>
+                    <input type="text" id="institution-name" class="form-control" placeholder="Nome da Instituição">
+                </div>
+                <div class="form-group">
+                    <label for="engineer-goal-input">Meta de Engenheiros:</label>
+                    <input type="number" id="engineer-goal-input" class="form-control" value="50" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="active-threshold">Período de Atividade (dias para ser considerado ativo):</label>
+                    <input type="number" id="active-threshold" class="form-control" value="30" min="1">
+                </div>
+                <button class="btn btn-primary" id="save-settings">Salvar Configurações</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Gerenciamento de Usuários Administradores</div>
+                <table id="admin-users-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Nível</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Administrador Principal</td>
+                            <td>admin@sistema.com</td>
+                            <td>Super Admin</td>
+                            <td><span class="badge badge-primary">Padrão</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" id="add-admin-btn"><i class="fas fa-plus"></i> Adicionar Administrador</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Backup e Exportação</div>
+                <button class="btn btn-primary export-btn" data-type="members"><i class="fas fa-file-export"></i> Exportar Membros (CSV)</button>
+                <button class="btn btn-primary export-btn" data-type="projects"><i class="fas fa-file-export"></i> Exportar Projetos (CSV)</button>
+                <button class="btn btn-primary export-btn" data-type="activities"><i class="fas fa-file-export"></i> Exportar Atividades (CSV)</button>
+                <button class="btn btn-primary" id="backup-btn"><i class="fas fa-download"></i> Backup Completo (JSON)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Todos os modais originais mantidos ... -->
+
+    <!-- Modal Adicionar Membro -->
+    <div id="add-member-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicionar Novo Membro</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="member-name">Nome Completo:</label>
+                <input type="text" id="member-name" class="form-control" placeholder="Nome do membro">
+            </div>
+            <div class="form-group">
+                <label for="member-email">Email:</label>
+                <input type="email" id="member-email" class="form-control" placeholder="Email do membro">
+            </div>
+            <div class="form-group">
+                <label for="member-role">Função:</label>
+                <select id="member-role" class="form-control">
+                    <option value="engineer">Engenheiro</option>
+                    <option value="designer">Designer</option>
+                    <option value="manager">Gerente</option>
+                    <option value="other">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="member-specialty">Especialidade:</label>
+                <input type="text" id="member-specialty" class="form-control" placeholder="Especialidade">
+            </div>
+            <div class="form-group">
+                <label for="member-phone">Telefone:</label>
+                <input type="text" id="member-phone" class="form-control" placeholder="Telefone">
+            </div>
+            <div class="form-group">
+                <label for="member-status">Status:</label>
+                <select id="member-status" class="form-control">
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="member-password">Senha (para acesso ao sistema):</label>
+                <input type="password" id="member-password" class="form-control" placeholder="Senha para login">
+            </div>
+            <button class="btn btn-primary" id="save-member-btn">Adicionar Membro</button>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Projeto -->
+    <div id="add-project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicionar Novo Projeto</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="project-name">Nome do Projeto:</label>
+                <input type="text" id="project-name" class="form-control" placeholder="Nome do projeto">
+            </div>
+            <div class="form-group">
+                <label for="project-description">Descrição:</label>
+                <textarea id="project-description" class="form-control" rows="3" placeholder="Descrição do projeto"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="project-start">Data de Início:</label>
+                <input type="date" id="project-start" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="project-end">Data de Término Prevista:</label>
+                <input type="date" id="project-end" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="project-manager">Gerente Responsável:</label>
+                <select id="project-manager" class="form-control">
+                    <!-- Será preenchido via JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="project-status">Status:</label>
+                <select id="project-status" class="form-control">
+                    <option value="planning">Planejamento</option>
+                    <option value="active">Em Andamento</option>
+                    <option value="paused">Pausado</option>
+                    <option value="completed">Concluído</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" id="save-project-btn">Adicionar Projeto</button>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Admin -->
+    <div id="add-admin-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicionar Novo Administrador</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="admin-name">Nome:</label>
+                <input type="text" id="admin-name" class="form-control" placeholder="Nome do administrador">
+            </div>
+            <div class="form-group">
+                <label for="admin-email">Email:</label>
+                <input type="email" id="admin-email" class="form-control" placeholder="Email do administrador">
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Senha:</label>
+                <input type="password" id="admin-password" class="form-control" placeholder="Senha">
+            </div>
+            <div class="form-group">
+                <label for="admin-level">Nível de Acesso:</label>
+                <select id="admin-level" class="form-control">
+                    <option value="admin">Administrador</option>
+                    <option value="super">Super Administrador</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" id="save-admin-btn">Adicionar Administrador</button>
+        </div>
+    </div>
+
+    <!-- Modal Ver Detalhes do Projeto -->
+    <div id="project-details-modal" class="modal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 class="modal-title" id="project-details-title">Detalhes do Projeto</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="project-details-content">
+                <div class="project-info">
+                    <h3>Informações do Projeto</h3>
+                    <p><strong>Descrição:</strong> <span id="project-details-description"></span></p>
+                    <p><strong>Gerente:</strong> <span id="project-details-manager"></span></p>
+                    <p><strong>Data de Início:</strong> <span id="project-details-start"></span></p>
+                    <p><strong>Data de Término Prevista:</strong> <span id="project-details-end"></span></p>
+                    <p><strong>Status:</strong> <span id="project-details-status"></span></p>
+                </div>
+                <div class="project-members">
+                    <h3>Membros do Projeto</h3>
+                    <ul id="project-members-list">
+                        <!-- Será preenchido via JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para sincronizar as opções de login -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sincronizar select com radio buttons
+        const loginAdmin = document.getElementById('login-admin');
+        const loginMember = document.getElementById('login-member');
+        const loginType = document.getElementById('login-type');
+        
+        if (loginAdmin && loginMember && loginType) {
+            // Atualizar select quando os radio buttons mudarem
+            loginAdmin.addEventListener('change', function() {
+                if (this.checked) loginType.value = 'admin';
+                updateLoginButton();
+            });
+            
+            loginMember.addEventListener('change', function() {
+                if (this.checked) loginType.value = 'member';
+                updateLoginButton();
+            });
+            
+            // Definir estado inicial
+            if (loginType.value === 'admin') {
+                loginAdmin.checked = true;
+            } else {
+                loginMember.checked = true;
+            }
+            
+            // Inicializar texto do botão de login
+            updateLoginButton();
+        }
+        
+        function updateLoginButton() {
+            const loginBtn = document.getElementById('login-btn');
+            if (!loginBtn) return;
+            
+            if (loginAdmin && loginAdmin.checked) {
+                loginBtn.innerHTML = '<i class="fas fa-user-shield"></i> Entrar como Administrador';
+            } else {
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar como Membro';
+            }
+        }
+    });
+    </script>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
